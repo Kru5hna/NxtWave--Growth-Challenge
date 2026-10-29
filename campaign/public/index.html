@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Your First AI Project in 60 Minutes — Free Workshop | NxtWave</title>
+  <meta name="description" content="Join 500+ final-year engineering students in this free, hands-on AI workshop. Build a real AI project, earn a certificate, and supercharge your placement resume in 60 minutes." />
+  <meta name="keywords" content="AI workshop, free AI course, engineering students, NxtWave, machine learning, resume building, placement prep" />
+  <meta name="author" content="NxtWave" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / WhatsApp Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://workshop.nxtwave.tech/" />
+  <meta property="og:title" content="Build Your First AI Project in 60 Minutes — Free Workshop" />
+  <meta property="og:description" content="Join 500+ engineering students. Hands-on AI project. Free certificate. Register now!" />
+  <meta property="og:image" content="https://workshop.nxtwave.tech/og-image.png" />
+  <meta property="og:site_name" content="NxtWave" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Build Your First AI Project in 60 Minutes — Free Workshop" />
+  <meta name="twitter:description" content="Join 500+ engineering students. Hands-on AI project. Free certificate. Register now!" />
+  <meta name="twitter:image" content="https://workshop.nxtwave.tech/og-image.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="#" class="nav__logo">
+        <span class="nav__logo-bolt">⚡</span> <span class="nav__logo-text">NxtWave</span>
+      </a>
+      <div class="nav__links">
+        <a href="#why" class="nav__link">Why Join</a>
+        <a href="#curriculum" class="nav__link">Curriculum</a>
+        <a href="#leaderboard" class="nav__link">Leaderboard</a>
+        <a href="#register" class="nav__cta">Register Free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======== HERO SECTION (EventX Sunset Spark Split Layout) ======== -->
+  <section class="hero" id="hero">
+    <!-- Ambient Sunset Glows matching screenshot -->
+    <div class="hero__glow-sun"></div>
+    <div class="hero__glow-ambient"></div>
+    <canvas class="hero__particles" id="particleCanvas"></canvas>
+
+    <div class="hero__container">
+      <!-- Left Column: Value Prop, Countdown, CTAs -->
+      <div class="hero__left">
+        <div class="hero__badges-row animate-on-scroll">
+          <div class="hero__badge hero__badge--live">
+            <span class="hero__badge-dot"></span>
+            <span>LIVE WORKSHOP</span>
+          </div>
+          <div class="hero__badge hero__badge--sub">
+            <span>NxtWave Tech Challenge 2026</span>
+          </div>
+        </div>
+
+        <h1 class="hero__title animate-on-scroll">
+          Build What<br />
+          <span class="hero__title--gradient">Comes Next</span><br />
+          <span class="hero__title--sub">in 60 Minutes</span>
+        </h1>
+
+        <p class="hero__subtitle animate-on-scroll">
+          A hands-on build for final-year engineering students across India. No theory dumps.
+          Walk away with a deployed AI project, an industry-recognized certificate, and an undeniable resume talking point.
+        </p>
+
+        <!-- Event Meta Pills matching screenshot -->
+        <div class="hero__meta-row animate-on-scroll">
+          <div class="hero__meta-pill">
+            <span class="hero__meta-icon">📅</span>
+            <span>7-Day Blitz</span>
+          </div>
+          <div class="hero__meta-pill">
+            <span class="hero__meta-icon">💻</span>
+            <span>100% Online</span>
+          </div>
+          <div class="hero__meta-pill">
+            <span class="hero__meta-icon">🏆</span>
+            <span>Free Certificate</span>
+          </div>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="hero__countdown-wrap animate-on-scroll">
+          <div class="hero__countdown" id="countdown">
+            <div class="countdown__item">
+              <span class="countdown__value" id="cd-days">07</span>
+              <span class="countdown__label">Days</span>
+            </div>
+            <div class="countdown__separator">:</div>
+            <div class="countdown__item">
+              <span class="countdown__value" id="cd-hours">12</span>
+              <span class="countdown__label">Hours</span>
+            </div>
+            <div class="countdown__separator">:</div>
+            <div class="countdown__item">
+              <span class="countdown__value" id="cd-mins">36</span>
+              <span class="countdown__label">Minutes</span>
+            </div>
+            <div class="countdown__separator">:</div>
+            <div class="countdown__item">
+              <span class="countdown__value" id="cd-secs">14</span>
+              <span class="countdown__label">Seconds</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Buttons -->
+        <div class="hero__action-row animate-on-scroll">
+          <a href="#register" class="hero__btn-primary">
+            Register Now →
+          </a>
+          <a href="#why" class="hero__btn-secondary">
+            View Curriculum
+          </a>
+        </div>
+
+        <!-- Social Proof Bar -->
+        <div class="hero__social-proof animate-on-scroll">
+          <div class="hero__counter-box">
+            <span class="hero__fire">🔥</span>
+            <span class="hero__counter-text">
+              <strong id="registeredCount" class="hero__counter">0</strong> final-year students registered
+            </span>
+          </div>
+        </div>
+
+        <!-- College Tags -->
+        <div class="hero__colleges animate-on-scroll">
+          <span class="hero__colleges-label">Top participants from:</span>
+          <div class="hero__colleges-tags">
+            <span class="college-tag">IITs</span>
+            <span class="college-tag">NITs</span>
+            <span class="college-tag">BITS</span>
+            <span class="college-tag">Anna Univ</span>
+            <span class="college-tag">JNTU</span>
+            <span class="college-tag">VTU</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Registration Card (EventX Sunset Spark Card) -->
+      <div class="hero__right register" id="register">
+        <div class="register__card animate-on-scroll">
+          <div class="register__card-header">
+            <h2 class="register__card-title">Register for the Event</h2>
+            <p class="register__card-desc">Fill in your details to confirm your spot.</p>
+          </div>
+
+          <form class="register__form" id="registerForm" novalidate>
+            <div class="form__group">
+              <label class="form__label" for="name">Full Name</label>
+              <input class="form__input" type="text" id="name" name="name" placeholder="Enter your full name" required autocomplete="name" />
+              <span class="form__error" id="name-error"></span>
+            </div>
+
+            <div class="form__group">
+              <label class="form__label" for="college">College / Organization</label>
+              <input class="form__input" type="text" id="college" name="college" placeholder="Your college or organization" required autocomplete="organization" />
+              <span class="form__error" id="college-error"></span>
+            </div>
+
+            <div class="form__group">
+              <label class="form__label" for="email">Email Address</label>
+              <input class="form__input" type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+              <span class="form__error" id="email-error"></span>
+            </div>
+
+            <div class="form__group">
+              <label class="form__label" for="whatsapp">Phone Number</label>
+              <div class="form__input-group">
+                <span class="form__prefix">+91</span>
+                <input class="form__input form__input--prefixed" type="tel" id="whatsapp" name="whatsapp" placeholder="Enter 10-digit number" required maxlength="10" autocomplete="tel-national" />
+              </div>
+              <span class="form__error" id="whatsapp-error"></span>
+            </div>
+
+            <div class="form__row">
+              <div class="form__group">
+                <label class="form__label" for="year">Year of Study</label>
+                <select class="form__input form__select" id="year" name="year" required>
+                  <option value="" disabled selected>Select year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year (Batch '25/'26)</option>
+                  <option value="Graduated">Recent Graduate</option>
+                </select>
+                <span class="form__error" id="year-error"></span>
+              </div>
+              <div class="form__group">
+                <label class="form__label" for="branch">Event Category / Branch</label>
+                <select class="form__input form__select" id="branch" name="branch" required>
+                  <option value="" disabled selected>Select category</option>
+                  <option value="CSE">Computer Science (CSE)</option>
+                  <option value="IT">Information Tech (IT)</option>
+                  <option value="AI_DS">AI & Data Science</option>
+                  <option value="ECE">Electronics (ECE)</option>
+                  <option value="EEE">Electrical (EEE)</option>
+                  <option value="Other">Other Engineering</option>
+                </select>
+                <span class="form__error" id="branch-error"></span>
+              </div>
+            </div>
+
+            <button class="form__submit" type="submit" id="submitBtn">
+              <span class="form__submit-text">Register Now →</span>
+              <span class="form__submit-loader" id="submitLoader"></span>
+            </button>
+
+            <p class="form__disclaimer">
+              🔒 You'll receive a confirmation & referral link after registration.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== REFERRAL SECTION (reveals after registration) ======== -->
+  <section class="referral" id="referral" style="display: none;">
+    <div class="referral__container">
+      <div class="referral__card animate-on-scroll">
+        <div class="referral__celebrate">🎉</div>
+        <h2 class="referral__title">You're Registered!</h2>
+        <p class="referral__subtitle">Share your unique link with 3 classmates to unlock the <strong>AI Project Starter Kit</strong> & climb the leaderboard.</p>
+
+        <div class="referral__link-wrap">
+          <p class="referral__label">Your Unique Referral Link</p>
+          <div class="referral__link-box">
+            <input class="referral__link-input" type="text" id="referralLink" readonly />
+            <button class="referral__copy-btn" id="copyBtn" title="Copy to clipboard">
+              <span id="copyIcon">📋</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="referral__actions">
+          <a class="referral__whatsapp-btn" id="whatsappShareBtn" href="#" target="_blank" rel="noopener noreferrer">
+            <svg class="referral__wa-icon" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span>Share with Friends on WhatsApp</span>
+          </a>
+        </div>
+
+        <div class="referral__stat-badge">
+          <span>Your Total Referrals:</span>
+          <strong id="referralCount">0</strong>
+        </div>
+
+        <!-- Reward tiers -->
+        <div class="referral__tiers">
+          <div class="tier-item">
+            <span class="tier-badge">3 Referrals</span>
+            <span class="tier-desc">Unlock AI Starter Kit + Pre-Pack</span>
+          </div>
+          <div class="tier-item">
+            <span class="tier-badge">5 Referrals</span>
+            <span class="tier-desc">1-on-1 AI Resume Review with Mentors</span>
+          </div>
+          <div class="tier-item">
+            <span class="tier-badge">10 Referrals</span>
+            <span class="tier-desc">Exclusive NxtWave Swag Pack + Shoutout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== WHY SECTION ======== -->
+  <section class="why" id="why">
+    <div class="why__container">
+      <div class="section__header animate-on-scroll">
+        <div class="section__pill">WHY JOIN THIS WORKSHOP</div>
+        <h2 class="section__title">
+          Build Real Skills. Get Hired Faster.
+        </h2>
+        <p class="section__subtitle">
+          Designed specifically for final-year engineering students facing placement season.
+        </p>
+      </div>
+
+      <div class="why__grid">
+        <div class="why__card animate-on-scroll">
+          <div class="why__card-icon-wrap">
+            <span class="why__card-icon">🧠</span>
+          </div>
+          <h3 class="why__card-title">Add AI to Your Resume</h3>
+          <p class="why__card-desc">
+            Stand out from thousands of generic applicants. A deployed AI project gives you the conversational edge recruiters hunt for.
+          </p>
+        </div>
+
+        <div class="why__card animate-on-scroll">
+          <div class="why__card-icon-wrap">
+            <span class="why__card-icon">⚡</span>
+          </div>
+          <h3 class="why__card-title">Guided 60-Minute Build</h3>
+          <p class="why__card-desc">
+            Zero fluff, zero theoretical dumps. Follow along step-by-step and ship a working AI project before the 60 minutes are up.
+          </p>
+        </div>
+
+        <div class="why__card animate-on-scroll">
+          <div class="why__card-icon-wrap">
+            <span class="why__card-icon">🏆</span>
+          </div>
+          <h3 class="why__card-title">Verified Certificate</h3>
+          <p class="why__card-desc">
+            Earn an official NxtWave workshop completion certificate. Share directly to your LinkedIn profile and showcase your skills.
+          </p>
+        </div>
+
+        <div class="why__card animate-on-scroll">
+          <div class="why__card-icon-wrap">
+            <span class="why__card-icon">🔥</span>
+          </div>
+          <h3 class="why__card-title">Join 500+ Ambitious Peers</h3>
+          <p class="why__card-desc">
+            You're not coding alone. Network with an active community of top engineering students across Tier-1, 2, and 3 colleges.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== CURRICULUM SECTION ======== -->
+  <section class="curriculum" id="curriculum">
+    <div class="curriculum__container">
+      <div class="section__header animate-on-scroll">
+        <div class="section__pill">60-MINUTE BLUEPRINT</div>
+        <h2 class="section__title">What You'll Build Step-by-Step</h2>
+        <p class="section__subtitle">A hands-on sprint from blank editor to working deployment.</p>
+      </div>
+
+      <div class="curriculum__timeline animate-on-scroll">
+        <div class="curriculum__step">
+          <div class="step__time">00-15m</div>
+          <div class="step__content">
+            <h4 class="step__title">AI Architecture & API Setup</h4>
+            <p class="step__desc">Understanding LLM endpoints, prompt conditioning, and scaffolding your project environment.</p>
+          </div>
+        </div>
+        <div class="curriculum__step">
+          <div class="step__time">15-40m</div>
+          <div class="step__content">
+            <h4 class="step__title">Core Logic & Model Integration</h4>
+            <p class="step__desc">Wiring intelligence into your application with real-time streaming and custom tool calls.</p>
+          </div>
+        </div>
+        <div class="curriculum__step">
+          <div class="step__time">40-55m</div>
+          <div class="step__content">
+            <h4 class="step__title">Frontend Interface & Testing</h4>
+            <p class="step__desc">Building a clean UI, connecting state, and testing edge cases with simulated user queries.</p>
+          </div>
+        </div>
+        <div class="curriculum__step">
+          <div class="step__time">55-60m</div>
+          <div class="step__content">
+            <h4 class="step__title">Live Deployment & Resume Card</h4>
+            <p class="step__desc">Deploying to a public URL and formatting your project description for recruiter ATS scans.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== LEADERBOARD SECTION ======== -->
+  <section class="leaderboard" id="leaderboard">
+    <div class="leaderboard__container">
+      <div class="section__header animate-on-scroll">
+        <div class="section__pill">CAMPUS LEADERBOARD</div>
+        <h2 class="section__title">Top Student Ambassadors</h2>
+        <p class="section__subtitle">Share your referral link to climb the ranks and earn exclusive perks.</p>
+      </div>
+
+      <div class="leaderboard__card animate-on-scroll">
+        <div class="leaderboard__table-wrap">
+          <table class="leaderboard__table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Student</th>
+                <th>Referrals</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+              <tr>
+                <td colspan="3" class="leaderboard__empty">Loading leaderboard…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__brand">
+        <span class="footer__logo"><span class="footer__bolt">⚡</span> NxtWave</span>
+        <p class="footer__tagline">Empowering the next wave of India's tech talent.</p>
+      </div>
+      <div class="footer__bottom">
+        <p>Built for the <strong>NxtWave Growth Challenge</strong> · © <span id="footerYear">2026</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======== FLOATING WHATSAPP BUTTON ======== -->
+  <a class="fab-whatsapp" id="fabWhatsapp" href="#" target="_blank" rel="noopener noreferrer" title="Share on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- ======== TOAST NOTIFICATIONS ======== -->
+  <div class="toast" id="toast"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

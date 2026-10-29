@@ -1,0 +1,17 @@
+{
+  "registrations": [
+    {
+      "id": "33c42a59-8a2c-4d8e-8c81-12eed3570049",
+      "name": "Krish Raut",
+      "email": "krishraut2103@gmail.com",
+      "college": "NxtWave Academy",
+      "whatsapp": "+919876543210",
+      "year": "4th Year",
+      "branch": "CSE",
+      "referralCode": "KRISH2AOO",
+      "referredBy": null,
+      "registeredAt": "2026-10-28T09:53:20.748Z"
+    }
+  ],
+  "referralCounts": {}
+}

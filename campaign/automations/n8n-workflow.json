@@ -1,0 +1,341 @@
+{
+  "name": "NxtWave Registration Campaign Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-registration",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Registration Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "studentName",
+              "value": "={{$json.body.name}}"
+            },
+            {
+              "name": "studentEmail",
+              "value": "={{$json.body.email}}"
+            },
+            {
+              "name": "studentCollege",
+              "value": "={{$json.body.college}}"
+            },
+            {
+              "name": "studentWhatsApp",
+              "value": "={{$json.body.whatsapp}}"
+            },
+            {
+              "name": "studentYear",
+              "value": "={{$json.body.year}}"
+            },
+            {
+              "name": "studentBranch",
+              "value": "={{$json.body.branch}}"
+            },
+            {
+              "name": "referralCode",
+              "value": "={{$json.body.referralCode}}"
+            },
+            {
+              "name": "referralLink",
+              "value": "={{$json.body.referralLink}}"
+            },
+            {
+              "name": "referredBy",
+              "value": "={{$json.body.referredBy}}"
+            },
+            {
+              "name": "registeredAt",
+              "value": "={{$json.body.registeredAt}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-fields",
+      "name": "Set Registration Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "={{$env.WHATSAPP_PHONE_NUMBER_ID}}",
+        "recipientPhoneNumber": "={{$node[\"Set Registration Fields\"].json.studentWhatsApp}}",
+        "resource": "message",
+        "operation": "send",
+        "messageType": "template",
+        "templateName": "registration_confirmation",
+        "languageCode": "en",
+        "templateParameters": {
+          "parameter": [
+            {
+              "type": "text",
+              "text": "={{$node[\"Set Registration Fields\"].json.studentName}}"
+            },
+            {
+              "type": "text",
+              "text": "={{$node[\"Set Registration Fields\"].json.referralLink}}"
+            }
+          ]
+        }
+      },
+      "id": "whatsapp-confirmation",
+      "name": "Send WhatsApp Confirmation",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [730, 160],
+      "credentials": {
+        "whatsAppBusinessApi": {
+          "id": "WHATSAPP_CREDENTIAL_ID",
+          "name": "WhatsApp Business API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{$env.GOOGLE_SHEET_ID}}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Registrations",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{$node[\"Set Registration Fields\"].json.studentName}}",
+            "Email": "={{$node[\"Set Registration Fields\"].json.studentEmail}}",
+            "College": "={{$node[\"Set Registration Fields\"].json.studentCollege}}",
+            "WhatsApp": "={{$node[\"Set Registration Fields\"].json.studentWhatsApp}}",
+            "Year": "={{$node[\"Set Registration Fields\"].json.studentYear}}",
+            "Branch": "={{$node[\"Set Registration Fields\"].json.studentBranch}}",
+            "Referral Code": "={{$node[\"Set Registration Fields\"].json.referralCode}}",
+            "Referred By": "={{$node[\"Set Registration Fields\"].json.referredBy}}",
+            "Registered At": "={{$node[\"Set Registration Fields\"].json.registeredAt}}"
+          }
+        },
+        "options": {}
+      },
+      "id": "google-sheets",
+      "name": "Add to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [730, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{$env.FROM_EMAIL}}",
+        "toEmail": "={{$node[\"Set Registration Fields\"].json.studentEmail}}",
+        "subject": "You're in! 🎉 Here's your exclusive referral link",
+        "emailType": "html",
+        "html": "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;\">\n  <h2 style=\"color: #4F46E5;\">Welcome to the NxtWave Workshop! 🚀</h2>\n  <p>Hi <strong>{{$node[\"Set Registration Fields\"].json.studentName}}</strong>,</p>\n  <p>You've successfully registered for the NxtWave Workshop. We're thrilled to have you!</p>\n  <h3>What's Next?</h3>\n  <ul>\n    <li>Workshop details will arrive closer to the date</li>\n    <li>Prep materials will be shared on Day 3</li>\n    <li>The workshop link will be sent 1 hour before we go live</li>\n  </ul>\n  <h3>🎁 Share & Earn Rewards</h3>\n  <p>Share your unique referral link with 3 friends and unlock exclusive bonus content:</p>\n  <p style=\"text-align: center; margin: 20px 0;\">\n    <a href=\"{{$node[\"Set Registration Fields\"].json.referralLink}}\" style=\"background: #4F46E5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;\">Your Referral Link</a>\n  </p>\n  <p>Your referral code: <strong>{{$node[\"Set Registration Fields\"].json.referralCode}}</strong></p>\n  <p style=\"margin-top: 30px;\">See you at the workshop! 💪</p>\n  <p>— Team NxtWave</p>\n</div>",
+        "options": {}
+      },
+      "id": "send-welcome-email",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [730, 460],
+      "credentials": {
+        "smtp": {
+          "id": "SMTP_CREDENTIAL_ID",
+          "name": "SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$env.CAMPAIGN_SERVER_URL}}/api/registrations",
+        "responseFormat": "json",
+        "options": {}
+      },
+      "id": "check-referral-count",
+      "name": "Check Referral Count",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1000, 300],
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const registrations = $input.all().map(i => i.json);\nconst referredBy = $node['Set Registration Fields'].json.referralCode;\n\n// This registration was just created — check if the *referrer* has hit 3\nconst referrerCode = $node['Set Registration Fields'].json.referredBy;\n\nif (!referrerCode) {\n  return [{ json: { shouldNotify: false } }];\n}\n\n// Count how many registrations were referred by this code\nconst flatRegs = Array.isArray(registrations[0]) ? registrations[0] : registrations;\nconst referralCount = flatRegs.filter(r => r.referredBy === referrerCode).length;\n\n// Find referrer details\nconst referrer = flatRegs.find(r => r.referralCode === referrerCode);\n\nreturn [{\n  json: {\n    shouldNotify: referralCount === 3,\n    referrerName: referrer ? referrer.name : 'Friend',\n    referrerWhatsApp: referrer ? referrer.whatsapp : null,\n    referralCount: referralCount\n  }\n}];"
+      },
+      "id": "evaluate-referral-milestone",
+      "name": "Evaluate Referral Milestone",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1220, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.shouldNotify}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-milestone-reached",
+      "name": "Milestone Reached?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1440, 300]
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "={{$env.WHATSAPP_PHONE_NUMBER_ID}}",
+        "recipientPhoneNumber": "={{$node[\"Evaluate Referral Milestone\"].json.referrerWhatsApp}}",
+        "resource": "message",
+        "operation": "send",
+        "messageType": "template",
+        "templateName": "achievement_unlocked",
+        "languageCode": "en",
+        "templateParameters": {
+          "parameter": [
+            {
+              "type": "text",
+              "text": "={{$node[\"Evaluate Referral Milestone\"].json.referrerName}}"
+            }
+          ]
+        }
+      },
+      "id": "whatsapp-achievement",
+      "name": "Send Achievement WhatsApp",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [1680, 200],
+      "credentials": {
+        "whatsAppBusinessApi": {
+          "id": "WHATSAPP_CREDENTIAL_ID",
+          "name": "WhatsApp Business API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true, \"message\": \"Workflow processed successfully\"}",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1000, 500]
+    }
+  ],
+  "connections": {
+    "Registration Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set Registration Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Registration Fields": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Confirmation",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Add to Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Welcome Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check Referral Count",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Referral Count": {
+      "main": [
+        [
+          {
+            "node": "Evaluate Referral Milestone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluate Referral Milestone": {
+      "main": [
+        [
+          {
+            "node": "Milestone Reached?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Milestone Reached?": {
+      "main": [
+        [
+          {
+            "node": "Send Achievement WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "NxtWave Campaign",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-01-01T00:00:00.000Z",
+  "versionId": "1"
+}
