@@ -352,6 +352,21 @@ app.get('/api/registrations/export', (req, res) => {
   }
 });
 
+// ALL /api/admin/reset — Wipe all data and reset to 0
+app.all('/api/admin/reset', (req, res) => {
+  try {
+    const empty = { registrations: [], referralCounts: {} };
+    writeData(empty);
+    return res.json({
+      success: true,
+      message: 'All registrations and referral counts have been completely reset to zero.',
+      totalRegistrations: 0,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // --- Start Server ---
 app.listen(PORT, () => {
   console.log(`🚀 NxtWave Campaign Server running on http://localhost:${PORT}`);
