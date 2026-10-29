@@ -106,21 +106,25 @@ function doPost(e) {
     // Send confirmation email directly via Google MailApp (Zero SMTP configuration required!)
     if (email && email.indexOf("@") !== -1) {
       var firstName = name.split(" ")[0];
-      var referralLink = data.referralLink || ("https://nxtwave-growth-challenge-public.vercel.app/?ref=" + referralCode);
+      var liveSiteUrl = "https://nxtwave-growth-challenge-public.vercel.app";
+      var referralLink = (data && data.referralLink && !data.referralLink.includes("localhost"))
+        ? data.referralLink
+        : (liveSiteUrl + "/?ref=" + referralCode);
 
       var subject = "🎉 Spot Confirmed: Build Your First AI Project in 60 Mins!";
       var htmlBody = 
         "<div style='font-family:sans-serif; background:#0F0B1A; color:#FFF7ED; padding:25px; border-radius:12px; max-width:550px;'>" +
-        "<div style='text-align:center;'><h1 style='color:#FF6B35;'>⚡ NxtWave AI Workshop</h1>" +
-        "<p style='color:#FFC857; font-weight:bold;'>FREE SPOT CONFIRMED</p></div>" +
-        "<p>Hi <strong>" + name + "</strong>,</p>" +
-        "<p>Your registration is locked in! In 60 minutes, you will build a real AI project from scratch and earn a verified completion certificate for your resume.</p>" +
-        "<div style='background:#1A1428; border:1px solid #FF6B35; padding:15px; border-radius:8px; margin:20px 0;'>" +
-        "<p style='margin:0;'><strong>Your Unique Referral Code:</strong> <span style='color:#FFC857; font-size:18px;'>" + referralCode + "</span></p>" +
-        "<p style='margin:8px 0 0; font-size:13px; color:#BCA8C8;'>Invite 3 classmates to unlock the AI Project Starter Kit:</p>" +
-        "<p style='color:#FF6B35; word-break:break-all;'><strong>" + referralLink + "</strong></p>" +
+        "<div style='text-align:center;'><h1 style='color:#FF6B35; margin:0 0 5px;'>⚡ NxtWave AI Workshop</h1>" +
+        "<p style='color:#FFC857; font-weight:bold; letter-spacing:1px; margin:0 0 20px;'>FREE SPOT CONFIRMED</p></div>" +
+        "<p style='font-size:15px;'>Hi <strong>" + name + "</strong>,</p>" +
+        "<p style='font-size:14px; line-height:1.6;'>Your registration is locked in! In 60 minutes, you will build a real AI project from scratch and earn a verified completion certificate for your resume.</p>" +
+        "<div style='background:#1A1428; border:1px solid #FF6B35; padding:18px; border-radius:8px; margin:20px 0;'>" +
+        "<p style='margin:0 0 8px;'><strong>Your Unique Referral Code:</strong> <span style='color:#FFC857; font-size:18px; font-weight:bold;'>" + referralCode + "</span></p>" +
+        "<p style='margin:0 0 10px; font-size:13px; color:#BCA8C8;'>Invite 3 classmates to unlock the AI Project Starter Kit:</p>" +
+        "<p style='margin:0 0 14px;'><a href='" + referralLink + "' target='_blank' style='color:#FFC857; text-decoration:underline; font-weight:bold; font-size:14px; word-break:break-all;'>" + referralLink + "</a></p>" +
+        "<a href='https://wa.me/?text=" + encodeURIComponent("⚡ Hey! I just registered for the free NxtWave AI Workshop. Build your first AI project in 60 mins. Register here: " + referralLink) + "' target='_blank' style='display:inline-block; background:#25D366; color:#ffffff; padding:10px 18px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:13px;'>📲 Share with Classmates on WhatsApp</a>" +
         "</div>" +
-        "<p style='font-size:12px; color:#BCA8C8;'>Workshop link will be dispatched to your WhatsApp (" + whatsapp + ") 24 hours before the event.</p>" +
+        "<p style='font-size:12px; color:#BCA8C8; line-height:1.5;'>Workshop link will be dispatched to your WhatsApp (" + whatsapp + ") 24 hours before the event.</p>" +
         "</div>";
 
       MailApp.sendEmail({
