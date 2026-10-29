@@ -144,6 +144,11 @@ app.post('/api/register', rateLimiter, (req, res) => {
       referralCode = generateReferralCode(name);
     } while (data.registrations.some((r) => r.referralCode === referralCode));
 
+    const frontendBase = process.env.FRONTEND_URL 
+      || (req.headers.origin && !req.headers.origin.includes('localhost') ? req.headers.origin : null)
+      || 'https://nxtwave-growth-challenge-public.vercel.app';
+    const referralLink = `${frontendBase}/?ref=${referralCode}`;
+
     // Create registration record
     const registration = {
       id: uuidv4(),
@@ -154,6 +159,7 @@ app.post('/api/register', rateLimiter, (req, res) => {
       year: year.trim(),
       branch: branch.trim(),
       referralCode,
+      referralLink,
       referredBy: incomingRef || null,
       registeredAt: new Date().toISOString(),
     };
@@ -161,11 +167,6 @@ app.post('/api/register', rateLimiter, (req, res) => {
     // Save registration
     data.registrations.push(registration);
     writeData(data);
-
-    const frontendBase = process.env.FRONTEND_URL 
-      || (req.headers.origin && !req.headers.origin.includes('localhost') ? req.headers.origin : null)
-      || 'https://nxtwave-growth-challenge-public.vercel.app';
-    const referralLink = `${frontendBase}/?ref=${referralCode}`;
 
     // 4. Live Automations: Dispatch to Google Sheets & Send Confirmation Email
     syncToGoogleSheets(registration).catch((err) =>

@@ -106,7 +106,7 @@ function doPost(e) {
     // Send confirmation email directly via Google MailApp (Zero SMTP configuration required!)
     if (email && email.indexOf("@") !== -1) {
       var firstName = name.split(" ")[0];
-      var referralLink = "https://nxtwave-growth-challenge-public.vercel.app/?ref=" + referralCode;
+      var referralLink = data.referralLink || ("https://nxtwave-growth-challenge-public.vercel.app/?ref=" + referralCode);
 
       var subject = "🎉 Spot Confirmed: Build Your First AI Project in 60 Mins!";
       var htmlBody = 

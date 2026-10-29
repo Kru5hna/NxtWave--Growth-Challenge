@@ -67,8 +67,8 @@
   }
 
   function getWhatsAppShareURL(referralLink) {
-    const msg = `🚀 Hey! I just registered for a *free AI workshop* by NxtWave — you can build your first AI project in just 60 minutes!\n\n🎓 Free certificate included.\n\n👉 Register here: ${referralLink}\n\nLet's do this together! 💪`;
-    return 'https://wa.me/?text=' + encodeURIComponent(msg);
+    const msg = '\u{1F680} Hey! I just registered for a *free AI workshop* by NxtWave \u2014 you can build your first AI project in just 60 minutes!\n\n\u{1F393} Free certificate included.\n\n\u{1F449} Register here: ' + referralLink + '\n\nLet\'s do this together! \u{1F4AA}';
+    return 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
   }
 
   // ---- COUNTDOWN TIMER ----
@@ -425,8 +425,8 @@
 
   // ---- FLOATING WHATSAPP FAB ----
   // Default share URL (before registration)
-  const defaultShareMsg = `🚀 Check out this free AI workshop by NxtWave — build your first AI project in 60 minutes!\n\n👉 ${SITE_URL}\n\nFree certificate included! 🎓`;
-  dom.fabWhatsapp.href = 'https://wa.me/?text=' + encodeURIComponent(defaultShareMsg);
+  const defaultShareMsg = '\u{1F680} Check out this free AI workshop by NxtWave \u2014 build your first AI project in 60 minutes!\n\n\u{1F449} ' + SITE_URL + '\n\nFree certificate included! \u{1F393}';
+  dom.fabWhatsapp.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(defaultShareMsg);
 
   // ---- PARTICLE ANIMATION ----
   function initParticles() {
