@@ -895,6 +895,26 @@ button, input, select, textarea {
   font-weight: 500;
 }
 
+.referral__another-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed rgba(255, 107, 53, 0.4);
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-block;
+}
+
+.referral__another-btn:hover {
+  background: rgba(255, 107, 53, 0.12);
+  color: var(--orange);
+  border-color: var(--orange);
+  transform: translateY(-2px);
+}
+
 /* ---- SECTION HEADERS ---- */
 .section__header {
   text-align: center;

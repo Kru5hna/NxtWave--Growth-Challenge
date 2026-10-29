@@ -373,6 +373,20 @@
     }
   });
 
+  // ---- REGISTER ANOTHER STUDENT ----
+  const registerAnotherBtn = $('#registerAnotherBtn');
+  if (registerAnotherBtn) {
+    registerAnotherBtn.addEventListener('click', function () {
+      dom.form.reset();
+      dom.referralSection.style.display = 'none';
+      if (dom.form.closest('.register')) {
+        dom.form.closest('.register').style.display = '';
+      }
+      const reg = $('#register') || dom.form;
+      reg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
   // ---- LEADERBOARD ----
   function fetchLeaderboard() {
     fetch(API_BASE + '/api/leaderboard')
@@ -530,6 +544,21 @@
 
   // ---- INIT ON LOAD ----
   function init() {
+    // Clear any previous session so every refresh starts with a clean registration form
+    try {
+      localStorage.removeItem('nw_referral');
+    } catch {}
+
+    // Ensure registration form is always visible on refresh
+    if (dom.form && dom.form.closest('.register')) {
+      dom.form.closest('.register').style.display = '';
+    }
+
+    // Ensure referral section is hidden on fresh load
+    if (dom.referralSection) {
+      dom.referralSection.style.display = 'none';
+    }
+
     // Footer year
     if (dom.footerYear) {
       dom.footerYear.textContent = new Date().getFullYear();
@@ -537,14 +566,6 @@
 
     // Particles
     initParticles();
-
-    // Check if user already registered
-    const stored = getStoredReferral();
-    if (stored && stored.code) {
-      showReferralSection(stored);
-      // Still show the form section but pre-fill message
-      dom.form.closest('.register').style.display = 'none';
-    }
 
     // Fetch leaderboard
     fetchLeaderboard();
