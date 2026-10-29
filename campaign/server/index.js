@@ -12,6 +12,7 @@ const DATA_FILE = path.join(__dirname, 'data.json');
 
 // Middleware
 app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -161,7 +162,10 @@ app.post('/api/register', rateLimiter, (req, res) => {
     data.registrations.push(registration);
     writeData(data);
 
-    const referralLink = `${req.protocol}://${req.get('host')}/?ref=${referralCode}`;
+    const frontendBase = process.env.FRONTEND_URL 
+      || (req.headers.origin && !req.headers.origin.includes('localhost') ? req.headers.origin : null)
+      || 'https://nxtwave-growth-challenge-public.vercel.app';
+    const referralLink = `${frontendBase}/?ref=${referralCode}`;
 
     // 4. Live Automations: Dispatch to Google Sheets & Send Confirmation Email
     syncToGoogleSheets(registration).catch((err) =>

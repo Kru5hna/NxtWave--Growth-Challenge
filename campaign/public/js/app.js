@@ -9,6 +9,9 @@
   const WORKSHOP_DATE = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const BASE_REGISTERED = 0; // Real-time verified count
   const SITE_URL = window.location.origin;
+  const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? ''
+    : 'https://nxtwave-growth-challenge-ohbz.onrender.com';
 
   // ---- DOM CACHE ----
   const $ = (sel) => document.querySelector(sel);
@@ -110,7 +113,7 @@
 
   function fetchRegisteredCount() {
     // Attempt to fetch from API; fall back to base count
-    fetch('/api/registered-count')
+    fetch(API_BASE + '/api/registered-count')
       .then((r) => {
         if (!r.ok) throw new Error('API unavailable');
         return r.json();
@@ -266,7 +269,7 @@
     };
 
     try {
-      const res = await fetch('/api/register', {
+      const res = await fetch(API_BASE + '/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -335,7 +338,7 @@
   }
 
   function fetchReferralCount(code) {
-    fetch('/api/referral-count?code=' + encodeURIComponent(code))
+    fetch(API_BASE + '/api/referral-count?code=' + encodeURIComponent(code))
       .then((r) => {
         if (!r.ok) throw new Error();
         return r.json();
@@ -372,7 +375,7 @@
 
   // ---- LEADERBOARD ----
   function fetchLeaderboard() {
-    fetch('/api/leaderboard')
+    fetch(API_BASE + '/api/leaderboard')
       .then((r) => {
         if (!r.ok) throw new Error();
         return r.json();
